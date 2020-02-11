@@ -53,6 +53,25 @@ router.post("/posts", (req, res) => {
         });
 });
 
+router.put("/posts/:id", (req, res) => {
+    const changes = req.body;
+    Posts.update(req.params.id, changes)
+        .then(post => {
+            if(post) {
+                res.status(200).json(hub);
+            } else {
+                res.status(404).json({ message: "The post could not be found"});
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                message: "Error updating the post"
+            });
+        });
+});
+
 router.post("/posts/:id/comments", (req, res) => {
     //add comments
 })
+
