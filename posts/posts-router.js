@@ -39,7 +39,7 @@ router.get("/posts/:id", (req, res) => {
             });
         });
 });
-
+//add new post
 router.post("/posts", (req, res) => {
     Posts.insert(req.body)
         .then(post => {
@@ -52,7 +52,7 @@ router.post("/posts", (req, res) => {
             });
         });
 });
-
+//update post
 router.put("/posts/:id", (req, res) => {
     const changes = req.body;
     Posts.update(req.params.id, changes)
@@ -70,6 +70,26 @@ router.put("/posts/:id", (req, res) => {
             });
         });
 });
+// remove post
+router.delete("/posts/:id", (req, res) => {
+    Posts.remove(req.params.id)
+        .then(count => {
+            if (count > 0) {
+                res.status(200).json({ message: "The post has been deleted" });
+            } else {
+                res.status(404).json({ message: "The post could not be found" });
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                message: "Error removing the post"
+            });
+        });
+});
+
+
+// comments methods below
 
 router.post("/posts/:id/comments", (req, res) => {
     //add comments
