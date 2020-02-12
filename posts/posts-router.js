@@ -91,7 +91,16 @@ router.delete("/posts/:id", (req, res) => {
 
 // comments methods below
 
-router.post("/posts/:id/comments", (req, res) => {
-    //add comments
-})
+router.get("/posts/:id/comments", (req, res) => {
+    const { id } = req.params;
+
+    Posts.findPostComments(id)
+        .then(comments => {
+            res.status(200).json(comments);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({ errorMessage: "Sorry no comment"})
+        });
+});
 
