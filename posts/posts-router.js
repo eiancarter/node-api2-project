@@ -91,6 +91,7 @@ router.delete("/posts/:id", (req, res) => {
 
 // comments methods below
 
+//get comments for post
 router.get("/posts/:id/comments", (req, res) => {
     const { id } = req.params;
 
@@ -103,4 +104,22 @@ router.get("/posts/:id/comments", (req, res) => {
             res.status(500).json({ errorMessage: "Sorry no comment"})
         });
 });
+
+//get
+router.post("/posts/:id/comments", (req, res) => {
+    const { id } = req.params;
+
+    const comment = { ...req.body, post_id: id };
+
+    Posts.addComment(comment)
+        .then(inserted => {
+            res.status(200).json(inserted);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({ errorMessage: "sorry, no comments for you" });
+        });
+});
+
+module.exports = router; 
 
