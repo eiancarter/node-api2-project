@@ -13,9 +13,9 @@ server.get("/", (req, res) => {
         <h2>Post Comments!</h2>
         <p>Welcome to the Page</p>
     `);
-});
+}); 
 
-const port = 6000;
+const port = process.env.PORT || 6000;
 server.listen(port, () => {
     console.log(`server running on http://localhost:${port}`);
-});
+}); 
