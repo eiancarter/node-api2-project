@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "heroku": "^7.38.1",
     "knex": "^0.20.7",
     "sqlite3": "^4.1.1"
   },
