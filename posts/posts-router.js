@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 
 const Posts = require("./posts-model");
 
@@ -58,7 +59,7 @@ router.put("/posts/:id", (req, res) => {
     Posts.update(req.params.id, changes)
         .then(post => {
             if(post) {
-                res.status(200).json(hub);
+                res.status(200).json(post);
             } else {
                 res.status(404).json({ message: "The post could not be found"});
             }
@@ -90,7 +91,7 @@ router.delete("/posts/:id", (req, res) => {
 
 
 // comments methods below
-
+//foreign key = = post_id for comments table
 //get comments for post
 router.get("/posts/:id/comments", (req, res) => {
     const { id } = req.params;
@@ -105,13 +106,13 @@ router.get("/posts/:id/comments", (req, res) => {
         });
 });
 
-//get
+//insert comments
 router.post("/posts/:id/comments", (req, res) => {
     const { id } = req.params;
 
     const comment = { ...req.body, post_id: id };
 
-    Posts.addComment(comment)
+    Posts.insertComment(comment)
         .then(inserted => {
             res.status(200).json(inserted);
         })
